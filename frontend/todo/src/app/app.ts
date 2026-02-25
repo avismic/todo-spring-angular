@@ -4,11 +4,13 @@ import { RouterOutlet } from '@angular/router';
 import { Welcome } from './welcome/welcome';
 import { Goodbye } from './goodbye/goodbye';
 import { Login } from './login/login';
+import { Menu } from './menu/menu';
+import { Footer } from './footer/footer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Welcome, Goodbye, Login, RouterOutlet],
+  imports: [Welcome, Goodbye, Login, RouterOutlet, Menu, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

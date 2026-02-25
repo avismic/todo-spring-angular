@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { HardcodedAuthentication } from '../service/hardcoded-authentication';
 
 @Component({
   selector: 'app-login',
@@ -9,26 +10,23 @@ import { Router } from '@angular/router';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+
 export class Login {
   username : string = 'avismic';
   password : string = '12345';
   errorMessage : string = 'Invalid username or password!';
   invalidLogin : boolean = false;
 
-  constructor( private router: Router) {
-
+  constructor( private router: Router, private hardcodedAuthentication: HardcodedAuthentication) {
   }
 
   handleLogin() {
     console.log('Login button clicked!');
     console.log('Username:', this.username);
     console.log('Password:', this.password);
-    if (this.username === 'avismic' && this.password === '12345') {
-      this.router.navigate(['welcome/', this.username]);
+    if (this.hardcodedAuthentication.authenticate(this.username, this.password)) {
+      this.router.navigate(['welcome', this.username]);
       this.invalidLogin = false;
-      //alert('Login successful!');
-      //redirect to welcome page
-      // window.location.href = '/welcome';
     } else {
       this.invalidLogin = true;
     }
