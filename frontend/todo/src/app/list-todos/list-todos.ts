@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { NgFor, NgIf, UpperCasePipe, DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NgFor, NgIf, UpperCasePipe, DatePipe, JsonPipe } from '@angular/common';
+import { TodoData } from '../service/data/todo-data';
 
 export class Todo {
   constructor(
@@ -13,14 +14,25 @@ export class Todo {
 @Component({
   selector: 'app-list-todos',
   standalone: true,
-  imports: [NgFor, NgIf, UpperCasePipe, DatePipe],
+  imports: [NgFor, NgIf, UpperCasePipe, DatePipe, JsonPipe],
   templateUrl: './list-todos.html',
   styleUrl: './list-todos.css',
 })
-export class ListTodos {
-  todos = [
-    new Todo(1, 'Learn Angular', false, new Date()),
-    new Todo(2, 'Learn Spring Boot', false, new Date()),
-    new Todo(3, 'Learn React', false, new Date()),
-  ];
+export class ListTodos implements OnInit {
+  
+  todos: Todo[] = [];
+
+  constructor(
+    private todoService: TodoData
+  ){}
+
+  ngOnInit() {
+    this.todoService.retrieveAllTodos('avismic').subscribe(
+      (response) => {
+        console.log(response);
+        this.todos = response;
+      },
+    );
+  }
+
 }
